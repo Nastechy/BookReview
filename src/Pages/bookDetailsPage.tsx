@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { BooksData } from '@/types/BooksData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import ReviewForm from '@/Components/ReviewForm';
@@ -8,17 +8,17 @@ type BookType = {
   id: number;
   title: string;
   author: string;
-  coverImage: string;
+  coverImage: string | StaticImageData; 
   description: string;
   reviews?: Array<{ user: string; content: string }>;
 };
 
-async function getBook(id: string): Promise<BookType | undefined> {
+function getBook(id: string): BookType | undefined {
   return BooksData.find((book) => book.id === parseInt(id));
 }
 
-export default async function BookDetailsPage({ params }: { params: { id: string } }) {
-  const book = await getBook(params.id);
+export default function BookDetailsPage({ params }: { params: { id: string } }) {
+  const book = getBook(params.id);
 
   if (!book) {
     return <div>Book not found</div>;
@@ -34,7 +34,7 @@ export default async function BookDetailsPage({ params }: { params: { id: string
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/3">
               <Image
-                src={book.coverImage}
+                src={typeof book.coverImage === 'string' ? book.coverImage : book.coverImage.src}
                 alt={`Cover of ${book.title}`}
                 width={300}
                 height={450}

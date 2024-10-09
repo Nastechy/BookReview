@@ -6,7 +6,7 @@ import { BooksData } from '@/types/BooksData';
 
 
 interface BooksData {
-    id: string;
+    id: number;
     title?: string;
     author?: string;
     coverImage?: string;

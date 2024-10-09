@@ -35,7 +35,7 @@ const SideBar: React.FC = () => {
                     ? "bg-purple-600 text-white"
                     : "text-purple-300"
                 }
-                hover:bg-purple-800 hover:text-white
+                hover:bg-purple-300 hover:text-white
                 active:bg-purple-600 active:text-white
               `}
             >
