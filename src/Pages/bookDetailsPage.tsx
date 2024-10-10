@@ -1,23 +1,17 @@
 import { Suspense } from 'react';
-import Image, { StaticImageData } from 'next/image';
-import { BooksData } from '@/types/BooksData';
+import Image from 'next/image';
+import { BookType, BooksData } from '@/types/BooksData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import ReviewForm from '@/Components/ReviewForm';
 
-type BookType = {
-  id: number;
-  title: string;
-  author: string;
-  coverImage: string | StaticImageData; 
-  description: string;
-  reviews?: Array<{ user: string; content: string }>;
-};
+
 
 function getBook(id: string): BookType | undefined {
   return BooksData.find((book) => book.id === parseInt(id));
 }
 
 export default function BookDetailsPage({ params }: { params: { id: string } }) {
+
   const book = getBook(params.id);
 
   if (!book) {
@@ -26,7 +20,7 @@ export default function BookDetailsPage({ params }: { params: { id: string } }) 
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Card>
+      <Card key={book.id}>
         <CardHeader>
           <CardTitle>{book.title}</CardTitle>
         </CardHeader>
@@ -42,8 +36,8 @@ export default function BookDetailsPage({ params }: { params: { id: string } }) 
               />
             </div>
             <div className="md:w-2/3 md:pl-8 mt-4 md:mt-0">
-              <p className="text-lg mb-2">Author: {book.author}</p>
-              <p className="mb-4">{book.description}</p>
+              <p className="text-lg mb-2 text-[16px] font-[600]">Author: {book.author}</p>
+              <p className="mb-6">{book.description}</p>
               <h2 className="text-2xl font-bold mb-4">Reviews</h2>
               {book.reviews && book.reviews.length > 0 ? (
                 book.reviews.map((review, index) => (

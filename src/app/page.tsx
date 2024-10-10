@@ -1,11 +1,12 @@
 
 import React from 'react'
 import HomePage from './home/page'
+import { BooksData } from '@/types/BooksData'
 
 const page = () => {
   return (
     <div>
-      <HomePage/>
+     <HomePage books={BooksData} />
     </div>
   )
 }
